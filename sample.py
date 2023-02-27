@@ -7,7 +7,7 @@ class orders():
             "Iceland": 2.8
         }
         self.shipping = {
-            "USA": 0.7,
+            "USA": 0.8,
             "Panama": 0,
             "Iceland": 3
         }
@@ -29,8 +29,11 @@ class orders():
         return total_cost
     
     def calculate_shipping_fee(self, items, location, weight):
-        total_cost = self.calculate_taxed_order(items, location)
+        total_cost = self.calculate_multiple_items_no_tax_no_fees(items)
         for i in items:
             weight += i["Weight"] * i["Quantity"]
         total_cost += weight * self.shipping[location]
         return round(total_cost,2)
+    
+    def calculate_total_cost(self, items, location):
+        return round(self.calculate_multiple_items_no_tax_no_fees(items) + self.calculate_taxed_order(items, location) + self.calculate_shipping_fee(items, location, 0),2)

@@ -24,9 +24,17 @@ def test_taxed_order():
     assert expected == actual
 
 def test_shipping_fee():
+    items = [{"Name": "Nocco", "Price": 50, "Weight": 1, "Quantity": 4},
+             {"Name": "Collab", "Price": 40, "Weight": 0.8, "Quantity": 2}]
+    expected = 285.28
+    order = orders(1)
+    actual = order.calculate_shipping_fee(items, "USA", 1)
+    assert expected == actual
+
+def test_total_cost():
     items = [{"Name": "Nocco", "Price": 50, "Weight": 1, "Quantity": 1},
              {"Name": "Collab", "Price": 40, "Weight": 0.8, "Quantity": 2}]
-    expected = 504.8
+    expected = 496.08
     order = orders(1)
-    actual = order.calculate_shipping_fee(items, "Iceland", 1)
+    actual = order.calculate_total_cost(items, "USA")
     assert expected == actual
